@@ -7,6 +7,14 @@ canvas.height =  64 * 9 // 576
 c.fillStyle = 'white';
 c.fillRect(0, 0, canvas.width, canvas.height);
 
+const backgroundLevel1 = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: './img/backgroundLevel1.png'
+})
+
 const player = new Player()
 
 const keys = {
@@ -32,8 +40,7 @@ const keys = {
 
 function animate(){
     window.requestAnimationFrame(animate)
-    c.fillStyle = 'white';
-    c.fillRect(0, 0, canvas.width, canvas.height);
+    backgroundLevel1.draw()
 
     player.velocity.x = 0
 
