@@ -23,13 +23,15 @@ class Player{
 
     update(){
 
+        this.position.x += this.velocity.x
+
         // GRAVIDADE
         this.position.y += this.velocity.y
+        this.sides.bottom = this.position.y + this.height
         
         // Verifica constantemente a posição do jogador, e puxa para baixo sempre que o sprite estiver acima da altura do chão
         if(this.sides.bottom + this.velocity.y < canvas.height){
             this.velocity.y += this.gravity
-            this.sides.bottom = this.position.y + this.height
         }else{
             // Se o jogador estiver no chão, a velocidade é resetada, para não atravessar
             this.velocity.y = 0
