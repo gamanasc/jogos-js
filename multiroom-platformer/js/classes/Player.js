@@ -1,7 +1,8 @@
-class Player{
+class Player extends Sprite{
     constructor({
-        collisionBlocks = []
+        collisionBlocks = [], imageSrc, frameRate
     }){
+        super({imageSrc, frameRate})
         this.position = {
             x: 200,
             y: 200
@@ -11,20 +12,17 @@ class Player{
             y: 0
         }
         this.gravity = 1
-        this.width = 25
-        this.height = 25
         this.sides = {
             bottom: this.position.y + this.height
         }
         this.collisionBlocks = collisionBlocks
     }
 
-    draw(){
-        c.fillStyle = 'red'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    }
-
     update(){
+        // // REFERÊNCIA
+        // c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+        // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
         // VERIFICA MOVIMENTO HORIZONTAL
         this.position.x += this.velocity.x
 
