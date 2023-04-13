@@ -4,6 +4,9 @@ const c = canvas.getContext('2d');
 canvas.width = 64 * 16 // 1024
 canvas.height =  64 * 9 // 576
 
+const parsedCollisions = collisionsLevel1.parse2D()
+const collisionBlocks = parsedCollisions.createObjectsFrom2D();
+
 c.fillStyle = 'white';
 c.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -41,6 +44,9 @@ const keys = {
 function animate(){
     window.requestAnimationFrame(animate)
     backgroundLevel1.draw()
+    collisionBlocks.forEach(collisionBlock => {
+        collisionBlock.draw()
+    })
 
     player.velocity.x = 0
 
