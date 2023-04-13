@@ -20,8 +20,8 @@ class Player extends Sprite{
 
     update(){
         // // REFERÊNCIA
-        // c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-        // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
 
         // VERIFICA MOVIMENTO HORIZONTAL
         this.position.x += this.velocity.x
@@ -49,7 +49,7 @@ class Player extends Sprite{
 
                 // COLISÃO HORIZONTAL PARA A DIREITA
                 if(this.velocity.x > 0){
-                    this.position.x = collisionBlock.position.x - this.width + 0.01
+                    this.position.x = collisionBlock.position.x - this.width - 0.01
                     break
                 }
             }
