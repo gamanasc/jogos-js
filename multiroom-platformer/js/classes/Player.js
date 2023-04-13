@@ -1,19 +1,22 @@
 class Player{
-    constructor(){
+    constructor({
+        collisionBlocks = []
+    }){
         this.position = {
-            x: 100,
-            y: 100
+            x: 200,
+            y: 200
         }
         this.velocity = {
             x: 0,
             y: 0
         }
         this.gravity = 1
-        this.width = 100
-        this.height = 100
+        this.width = 25
+        this.height = 25
         this.sides = {
             bottom: this.position.y + this.height
         }
+        this.collisionBlocks = collisionBlocks
     }
 
     draw(){
@@ -22,20 +25,69 @@ class Player{
     }
 
     update(){
-
+        // VERIFICA MOVIMENTO HORIZONTAL
         this.position.x += this.velocity.x
 
-        // GRAVIDADE
-        this.position.y += this.velocity.y
-        this.sides.bottom = this.position.y + this.height
-        
-        // Verifica constantemente a posição do jogador, e puxa para baixo sempre que o sprite estiver acima da altura do chão
-        if(this.sides.bottom + this.velocity.y < canvas.height){
-            this.velocity.y += this.gravity
-        }else{
-            // Se o jogador estiver no chão, a velocidade é resetada, para não atravessar
-            this.velocity.y = 0
-        }
+        this.checkForHorizontalColiisions();
+        this.applyGravity();
+        this.checkForVerticalColiisions();
+    }
 
+    checkForHorizontalColiisions(){
+        // COLISÕES HORIZONTAIS
+        for (const element of this.collisionBlocks) {
+            const collisionBlock = element
+            if(
+                this.position.x <= collisionBlock.position.x + collisionBlock.width && // ESQUERDA
+                this.position.x + this.width >= collisionBlock.position.x && // DIREITA
+                this.position.y + this.height >= collisionBlock.position.y && // TOPO
+                this.position.y <= collisionBlock.position.y + collisionBlock.height // FUNDO
+            ){
+                // COLISÃO HORIZONTAL PARA A ESQUERDA
+                if(this.velocity.x < 0){
+                    this.position.x = collisionBlock.position.x + collisionBlock.width + 0.01
+                    break
+                }
+
+                // COLISÃO HORIZONTAL PARA A DIREITA
+                if(this.velocity.x > 0){
+                    this.position.x = collisionBlock.position.x - this.width + 0.01
+                    break
+                }
+            }
+        }
+    }
+
+    applyGravity(){
+        // GRAVIDADE
+        this.velocity.y += this.gravity
+        this.position.y += this.velocity.y
+    }
+
+    checkForVerticalColiisions(){
+        // COLISÕES VERTICAIS
+        for (const element of this.collisionBlocks) {
+            const collisionBlock = element
+            if(
+                this.position.x <= collisionBlock.position.x + collisionBlock.width && // ESQUERDA
+                this.position.x + this.width >= collisionBlock.position.x && // DIREITA
+                this.position.y + this.height >= collisionBlock.position.y && // TOPO
+                this.position.y <= collisionBlock.position.y + collisionBlock.height // FUNDO
+            ){
+                // COLISÃO VERTICAL PARA A ESQUERDA
+                if(this.velocity.y < 0){
+                    this.velocity.y = 0
+                    this.position.y = collisionBlock.position.y + collisionBlock.height + 0.01
+                    break
+                }
+
+                // COLISÃO VERTICAL PARA A DIREITA
+                if(this.velocity.y > 0){
+                    this.velocity.y = 0
+                    this.position.y = collisionBlock.position.y - this.height - 0.01
+                    break
+                }
+            }
+        }
     }
 }
