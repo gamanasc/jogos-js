@@ -20,15 +20,35 @@ class Player extends Sprite{
 
     update(){
         // // REFERÊNCIA
-        c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        /*
+        * c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+        * c.fillRect(this.position.x, this.position.y, this.width, this.height) 
+        **/
 
         // VERIFICA MOVIMENTO HORIZONTAL
         this.position.x += this.velocity.x
 
-        this.checkForHorizontalColiisions();
-        this.applyGravity();
-        this.checkForVerticalColiisions();
+        this.updateHitbox()
+
+        this.checkForHorizontalColiisions()
+        this.applyGravity()
+
+        this.updateHitbox()
+        
+        // c.fillRect(this.hitbox.position.x, this.hitbox.position.y, this.hitbox.width, this.hitbox.height)
+
+        this.checkForVerticalColiisions()
+    }
+
+    updateHitbox(){
+        this.hitbox = {
+            position: {
+                x: this.position.x + 58,
+                y: this.position.y + 34
+            },
+            width: 50,
+            height: 53
+        }
     }
 
     checkForHorizontalColiisions(){
@@ -36,20 +56,22 @@ class Player extends Sprite{
         for (const element of this.collisionBlocks) {
             const collisionBlock = element
             if(
-                this.position.x <= collisionBlock.position.x + collisionBlock.width && // ESQUERDA
-                this.position.x + this.width >= collisionBlock.position.x && // DIREITA
-                this.position.y + this.height >= collisionBlock.position.y && // TOPO
-                this.position.y <= collisionBlock.position.y + collisionBlock.height // FUNDO
+                this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width && // ESQUERDA
+                this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x && // DIREITA
+                this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y && // TOPO
+                this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height // FUNDO
             ){
                 // COLISÃO HORIZONTAL PARA A ESQUERDA
                 if(this.velocity.x < 0){
-                    this.position.x = collisionBlock.position.x + collisionBlock.width + 0.01
+                    const offset = this.hitbox.position.x - this.position.x
+                    this.position.x = collisionBlock.position.x + collisionBlock.width - offset + 0.01
                     break
                 }
 
                 // COLISÃO HORIZONTAL PARA A DIREITA
                 if(this.velocity.x > 0){
-                    this.position.x = collisionBlock.position.x - this.width - 0.01
+                    const offset = this.hitbox.position.x - this.position.x + this.hitbox.width
+                    this.position.x = collisionBlock.position.x - offset - 0.01
                     break
                 }
             }
@@ -67,22 +89,24 @@ class Player extends Sprite{
         for (const element of this.collisionBlocks) {
             const collisionBlock = element
             if(
-                this.position.x <= collisionBlock.position.x + collisionBlock.width && // ESQUERDA
-                this.position.x + this.width >= collisionBlock.position.x && // DIREITA
-                this.position.y + this.height >= collisionBlock.position.y && // TOPO
-                this.position.y <= collisionBlock.position.y + collisionBlock.height // FUNDO
+                this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width && // ESQUERDA
+                this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x && // DIREITA
+                this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y && // TOPO
+                this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height // FUNDO
             ){
-                // COLISÃO VERTICAL PARA A ESQUERDA
+                // COLISÃO VERTICAL PARA CIMA
                 if(this.velocity.y < 0){
+                    const offset = this.hitbox.position.y - this.position.y
                     this.velocity.y = 0
-                    this.position.y = collisionBlock.position.y + collisionBlock.height + 0.01
+                    this.position.y = collisionBlock.position.y + collisionBlock.height - offset + 0.01
                     break
                 }
 
-                // COLISÃO VERTICAL PARA A DIREITA
+                // COLISÃO VERTICAL PARA BAIXO
                 if(this.velocity.y > 0){
+                    const offset = this.hitbox.position.y - this.position.y + this.hitbox.height
                     this.velocity.y = 0
-                    this.position.y = collisionBlock.position.y - this.height - 0.01
+                    this.position.y = collisionBlock.position.y - offset - 0.01
                     break
                 }
             }
