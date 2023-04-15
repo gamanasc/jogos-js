@@ -1,7 +1,11 @@
-const audio = new Audio('./sound/bg.mp3')
-audio.volume = 0.5;
+const bgAudio = new Audio('./sound/bg.mp3')
+const jumpAudio = new Audio('./sound/jump.mp3')
+const doorAudio = new Audio('./sound/door.mp3')
+const walkDoorAudio = new Audio('./sound/walkDoor.mp3')
+
+bgAudio.volume = 0.25;
 document.body.addEventListener("keydown", function () {
-    audio.play()
+    bgAudio.play()
 })
 
 const canvas = document.querySelector('canvas');
@@ -79,6 +83,11 @@ let levels = {
             collisionBlocks = parsedCollisions.createObjectsFrom2D();
             player.collisionBlocks = collisionBlocks
 
+            doorAudio.pause()
+            doorAudio.currentTime = 0
+            walkDoorAudio.pause()
+            walkDoorAudio.currentTime = 0
+
             if(player.currentAnimation){
                 player.currentAnimation.isActive = false
             }
@@ -116,6 +125,11 @@ let levels = {
             player.position.x = 96
             player.position.y = 140
 
+            doorAudio.pause()
+            doorAudio.currentTime = 0
+            walkDoorAudio.pause()
+            walkDoorAudio.currentTime = 0
+
             if(player.currentAnimation){
                 player.currentAnimation.isActive = false
             }
@@ -152,6 +166,11 @@ let levels = {
             player.collisionBlocks = collisionBlocks
             player.position.x = 700
             player.position.y = 230
+
+            doorAudio.pause()
+            doorAudio.currentTime = 0
+            walkDoorAudio.pause()
+            walkDoorAudio.currentTime = 0
 
             if(player.currentAnimation){
                 player.currentAnimation.isActive = false

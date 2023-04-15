@@ -19,10 +19,17 @@ window.addEventListener('keydown', (event) => {
                     player.preventInput = true
                     player.switchSprite('enterDoor')
                     door.play()
+                    doorAudio.play()
+                    walkDoorAudio.play()
                     return
                 }
             }
             if(player.velocity.y == 0) player.velocity.y = -20
+            jumpAudio.play()
+            setTimeout(() => {
+                jumpAudio.pause();
+                jumpAudio.currentTime = 0;
+            }, 300)
             break;
         case 'a':
             keys.a.pressed = true

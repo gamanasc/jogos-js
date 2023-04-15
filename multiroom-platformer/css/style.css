@@ -1,25 +1,31 @@
 body{
     background-color: #332d42;
     min-height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    text-align: center
+}
+canvas{
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
 }
 span{
     color: wheat;
-    font-size: 12px;
+    font-size: 11px;
     font-family: sans-serif;
-    padding-top: 10px;
+    padding-top: 5px;
     width: 100%;
     display: block;
 }
 span a{
-    color: #f07860;
+    color: #958fa3;
     text-decoration: none;
 }
 
 .creditos{
     width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+.creditos .titulo{
+    color: #f07860;
+    margin-top: 10px;
 }
