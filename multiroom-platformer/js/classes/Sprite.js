@@ -24,6 +24,7 @@ class Sprite {
         this.animations = animations
         this.loop = loop
         this.autoplay = autoplay
+        this.currentAnimation
 
         if(this.animations){
             for(let key in this.animations){
@@ -76,5 +77,12 @@ class Sprite {
             }
         }
 
+
+        if(this.currentAnimation?.onComplete){
+            if(this.currentFrame === this.frameRate - 1 && !this.currentAnimation.isActive){
+                this.currentAnimation.onComplete()
+                this.currentAnimation.isActive = true
+            }
+        }
     }
 }
