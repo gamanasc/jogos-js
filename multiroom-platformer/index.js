@@ -1,3 +1,9 @@
+const audio = new Audio('./sound/bg.mp3')
+audio.volume = 0.5;
+document.body.addEventListener("keydown", function () {
+    audio.play()
+})
+
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 

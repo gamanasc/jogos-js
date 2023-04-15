@@ -1,0 +1,15 @@
+body{
+    background-color: #332d42;
+}
+span{
+    color: wheat;
+    font-size: 12px;
+    font-family: sans-serif;
+    padding-top: 10px;
+    width: 100%;
+    display: block;
+}
+span a{
+    color: #f07860;
+    text-decoration: none;
+}
