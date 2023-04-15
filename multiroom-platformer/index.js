@@ -43,10 +43,21 @@ const player = new Player({
             loop: false,
             imageSrc: './img/king/enterDoor.png',
             onComplete: () => {
-                console.log('completed');
                 
                 gsap.to(overlay, {
-                    opacity: 1
+                    opacity: 1,
+                    onComplete: () => {
+                        level++
+                        if(level >= 4){
+                            level = 1
+                        }
+                        levels[level].init()
+                        player.switchSprite('idleRight')
+                        player.preventInput = false
+                        gsap.to(overlay, {
+                            opacity: 0
+                        })
+                    }
                 })
             }
         },
@@ -55,11 +66,16 @@ const player = new Player({
 
 let level = 1
 let levels = {
+    // LEVEL 1
     1: {
         init: () => {
             parsedCollisions = collisionsLevel1.parse2D()
             collisionBlocks = parsedCollisions.createObjectsFrom2D();
-            player.collisionBlocks = collisionBlocks,
+            player.collisionBlocks = collisionBlocks
+
+            if(player.currentAnimation){
+                player.currentAnimation.isActive = false
+            }
 
             backgroundLevel = new Sprite({
                 position: {
@@ -83,7 +99,81 @@ let levels = {
                 })
             ]
         }
-    }
+    },
+
+    // LEVEL 2
+    2: {
+        init: () => {
+            parsedCollisions = collisionsLevel2.parse2D()
+            collisionBlocks = parsedCollisions.createObjectsFrom2D();
+            player.collisionBlocks = collisionBlocks
+            player.position.x = 96
+            player.position.y = 140
+
+            if(player.currentAnimation){
+                player.currentAnimation.isActive = false
+            }
+
+            backgroundLevel = new Sprite({
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                imageSrc: './img/backgroundLevel2.png'
+            })
+
+            doors = [
+                new Sprite({
+                    position: {
+                        x: 772,
+                        y: 336
+                    },
+                    imageSrc: './img/doorOpen.png',
+                    frameRate: 5,
+                    frameBuffer: 5,
+                    loop: false,
+                    autoplay: false
+                })
+            ]
+        }
+    },
+
+    // LEVEL 3
+    3: {
+        init: () => {
+            parsedCollisions = collisionsLevel3.parse2D()
+            collisionBlocks = parsedCollisions.createObjectsFrom2D();
+            player.collisionBlocks = collisionBlocks
+            player.position.x = 700
+            player.position.y = 230
+
+            if(player.currentAnimation){
+                player.currentAnimation.isActive = false
+            }
+
+            backgroundLevel = new Sprite({
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                imageSrc: './img/backgroundLevel3.png'
+            })
+
+            doors = [
+                new Sprite({
+                    position: {
+                        x: 175,
+                        y: 335
+                    },
+                    imageSrc: './img/doorOpen.png',
+                    frameRate: 5,
+                    frameBuffer: 5,
+                    loop: false,
+                    autoplay: false
+                })
+            ]
+        }
+    },
 }
 
 const keys = {
@@ -114,9 +204,9 @@ const overlay = {
 function animate(){
     window.requestAnimationFrame(animate)
     backgroundLevel.draw()
-    collisionBlocks.forEach(collisionBlock => {
-        collisionBlock.draw()
-    })
+    // collisionBlocks.forEach(collisionBlock => {
+    //     collisionBlock.draw()
+    // })
 
     doors.forEach(door => {
         door.draw()

@@ -22,7 +22,7 @@ window.addEventListener('keydown', (event) => {
                     return
                 }
             }
-            if(player.velocity.y == 0) player.velocity.y = -25
+            if(player.velocity.y == 0) player.velocity.y = -20
             break;
         case 'a':
             keys.a.pressed = true
